@@ -1,8 +1,9 @@
-'''
+/* 
 第一题：更新结构体成员 (Pointers and Structs)
 题目描述:
 编写一个函数 update_score，该函数接收一个指向 Student 结构体的指针和一个新的分数。函数需要将该学生的分数更新为新分数。
-'''
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
