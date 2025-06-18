@@ -1,7 +1,9 @@
 /*
 第九题：删除双向链表中的指定节点 (Doubly Linked List)
 题目描述:
-编写一个函数 delete_node，该函数接收一个指向双向链表头指针的指针 (DoublyNode** head) 和一个要删除的整数值。函数应找到第一个具有该值的节点，将其从链表中移除，并释放其内存。注意处理头节点、尾节点和中间节点被删除的情况。
+编写一个函数 delete_node，该函数接收一个指向双向链表头指针的指针 (DoublyNode**
+head)
+和一个要删除的整数值。函数应找到第一个具有该值的节点，将其从链表中移除，并释放其内存。注意处理头节点、尾节点和中间节点被删除的情况。
 */
 
 #include <stdio.h>
@@ -18,10 +20,47 @@ void insert_at_tail(DoublyNode** head, int data);
 void print_doubly_list(DoublyNode* head);
 void free_doubly_list(DoublyNode* head);
 
-
 // TODO: 实现这个函数
 void delete_node(DoublyNode** head, int value_to_delete) {
-    // 您的代码在这里
+    // 步骤 0: 检查链表是否为空
+    if (head == NULL || *head == NULL) {
+        return;
+    }
+
+    DoublyNode* current = *head;
+
+    // 步骤 1: 查找目标节点
+    // 循环直到找到节点，或者走完链表
+    while (current != NULL && current->data != value_to_delete) {
+        current = current->next;
+    }
+
+    // 步骤 2: 如果没找到，函数结束
+    if (current == NULL) {
+        return;
+    }
+
+    // --- 程序能走到这里，说明 current 指向了要删除的节点 ---
+
+    // 步骤 3: 重新连接前后节点 (核心逻辑)
+    
+    // Part A: 处理 current 的前一个节点
+    if (current->prev != NULL) {
+        // 如果 current 不是头节点，让它前一个节点的 next 指向它后一个节点
+        current->prev->next = current->next;
+    } else {
+        // 如果 current 是头节点，直接更新头指针
+        *head = current->next;
+    }
+
+    // Part B: 处理 current 的后一个节点
+    if (current->next != NULL) {
+        // 如果 current 不是尾节点，让它后一个节点的 prev 指向它前一个节点
+        current->next->prev = current->prev;
+    }
+    
+    // 步骤 4: 释放内存
+    free(current);
 }
 
 int main() {
@@ -33,14 +72,14 @@ int main() {
     printf("原始链表: ");
     print_doubly_list(head);
 
-    delete_node(&head, 20); // 删除中间节点
+    delete_node(&head, 20);  // 删除中间节点
     printf("删除 20后: ");
     print_doubly_list(head);
 
-    delete_node(&head, 10); // 删除头节点
+    delete_node(&head, 10);  // 删除头节点
     printf("删除 10后: ");
     print_doubly_list(head);
-    
+
     free_doubly_list(head);
     return 0;
 }
@@ -48,18 +87,30 @@ int main() {
 // 辅助函数 (为方便测试，提供简单实现)
 void insert_at_tail(DoublyNode** head, int data) {
     DoublyNode* new_node = (DoublyNode*)malloc(sizeof(DoublyNode));
-    new_node->data = data; new_node->next = NULL; new_node->prev = NULL;
-    if (*head == NULL) { *head = new_node; return; }
+    new_node->data = data;
+    new_node->next = NULL;
+    new_node->prev = NULL;
+    if (*head == NULL) {
+	*head = new_node;
+	return;
+    }
     DoublyNode* temp = *head;
-    while(temp->next != NULL) temp = temp->next;
+    while (temp->next != NULL) temp = temp->next;
     temp->next = new_node;
     new_node->prev = temp;
 }
 void print_doubly_list(DoublyNode* head) {
-    while(head) { printf("%d ", head->data); head = head->next; }
+    while (head) {
+	printf("%d ", head->data);
+	head = head->next;
+    }
     printf("\n");
 }
 void free_doubly_list(DoublyNode* head) {
     DoublyNode* temp;
-    while(head) { temp = head; head = head->next; free(temp); }
+    while (head) {
+	temp = head;
+	head = head->next;
+	free(temp);
+    }
 }

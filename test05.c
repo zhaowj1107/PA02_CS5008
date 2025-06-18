@@ -15,6 +15,16 @@ typedef struct SinglyNode {
 // TODO: 实现这个函数
 int list_length(SinglyNode* head) {
     // 您的代码在这里
+    int counter = 0;
+    if (head == NULL) {
+	return counter;
+    }
+
+    while (head != NULL) {
+	head = head->next;
+	counter++;
+    }
+    return counter;
 }
 
 int main() {
@@ -24,12 +34,12 @@ int main() {
     head->next->data = 2;
     head->next->next = NULL;
 
-    printf("链表长度是: %d\n", list_length(head)); // 应该输出: 2
+    printf("链表长度是: %d\n", list_length(head));  // 应该输出: 2
 
     free(head->next);
     free(head);
-    
-    printf("空链表的长度是: %d\n", list_length(NULL)); // 应该输出: 0
+
+    printf("空链表的长度是: %d\n", list_length(NULL));	// 应该输出: 0
 
     return 0;
 }

@@ -15,6 +15,17 @@ typedef struct SinglyNode {
 // TODO: 实现这个函数
 int sum_of_even(SinglyNode* head) {
     // 您的代码在这里
+    if (head == NULL) {
+        return 0;
+    }
+    int sum = 0;
+    while (head != NULL) {
+        if (head->data % 2 == 0){
+            sum = sum + head->data;
+        }
+        head = head -> next;
+    }
+    return sum;
 }
 
 int main() {
