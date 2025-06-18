@@ -5,23 +5,27 @@
 */
 
 #include <stdio.h>
-#include <stdlib.h>
 
 typedef struct {
-    int x;
-    int y;
-} Point;
+    char* name;
+    int student_id;
+    double score;
+} Student;
 
 // TODO: 实现这个函数
-Point* create_point(int x, int y) {
-    // 您的代码在这里
+void update_score(Student* s, double new_score) {
+    if (s == NULL) {
+        return;
+    }
+    s->score = new_score;
 }
 
 int main() {
-    Point* p = create_point(10, 20);
-    if (p != NULL) {
-        printf("Point created at: (%d, %d)\n", p->x, p->y);
-        free(p); // 释放内存
-    }
+    Student student1 = {"Alice", 101, 85.5};
+    printf("原始分数: %.2f\n", student1.score);
+
+    update_score(&student1, 92.0);
+    printf("更新后的分数: %.2f\n", student1.score);
+
     return 0;
 }
